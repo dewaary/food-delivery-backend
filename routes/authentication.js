@@ -1,6 +1,5 @@
 var express = require('express');
-const { response } = require('../app');
-const { userRegister, userLogin } = require('../services/authentication.service');
+const { userRegister, userLogin, checkUserExist } = require('../services/authentication.service');
 var router = express.Router();
 
 
@@ -14,6 +13,13 @@ router.post('/register', async (req, res, next) => {
 router.post('/login', async (req, res, next) => {
   let body = req.body;
   let response = await userLogin(body)
+  res.json(response)
+});
+
+router.get('/user-exist', async (req, res, next) => {
+  let params = req.query;
+  let response = await checkUserExist(params)
+  console.log('ini respone exist', response);
   res.json(response)
 });
 
